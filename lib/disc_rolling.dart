@@ -14,10 +14,32 @@ class DiscRolling extends StatefulWidget {
 class _DiscRollingState extends State<DiscRolling> {
   var leftDice = 1;
   var rightDice = 1;
+  var attempt = 0;
   click() {
     setState(() {
       leftDice = Random().nextInt(6)+1;
       rightDice = Random().nextInt(6)+1;
+      attempt++;
+      if (leftDice == rightDice) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Congratulations!'),
+              content: Text('All dice are the same after $attempt attempts.'),
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+
     });
   }
 
